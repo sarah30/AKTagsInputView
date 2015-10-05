@@ -110,10 +110,11 @@
 {
     if ([self canInsertNewTagName:textField.text]){
         [self addNewItemWithString:textField.tagName completion:nil];
+    }else{
+        [textField resignFirstResponder];
     }
     return YES;
 }
-
 - (void)restoreZWWSIfNeeded:(AKTextField *)textField
 {
     if ([textField.text rangeOfString:ZWWS].location == NSNotFound){
