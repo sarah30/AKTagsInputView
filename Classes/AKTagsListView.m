@@ -77,12 +77,17 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-	AKTagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tagsViewCell" forIndexPath:indexPath];
-	cell.tagName = self.selectedTags[indexPath.row];
-	cell.delegate = self;
-	cell.showDeleteButton = self.allowDeleteTags;
-	[self configureCell:cell atIndexPath:indexPath];
-	return cell;
+
+    if ([self.delegate respondsToSelector:@selector(collectionView:cellForItemAtIndexPath:)]){
+       return  [self.delegate collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    }else{        
+        AKTagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tagsViewCell" forIndexPath:indexPath];
+        cell.tagName = self.selectedTags[indexPath.row];
+        cell.delegate = self;
+        cell.showDeleteButton = self.allowDeleteTags;
+        [self configureCell:cell atIndexPath:indexPath];
+        return cell;
+    }
 }
 
 -(void)configureCell:(AKTagCell*)cell atIndexPath:(NSIndexPath*)indexPath

@@ -9,7 +9,7 @@
 #import "AKTagsInputView.h"
 #import "AKViewController.h"
 
-@interface AKViewController ()
+@interface AKViewController ()<AKTagsListViewDelegate>
 {
 	AKTagsInputView *_tagsInputView;
 }
@@ -25,6 +25,7 @@
 	_tagsInputView.lookupTags = @[@"ios", @"iphone", @"objective-c", @"development", @"cocoa", @"xcode", @"icloud"];
 	_tagsInputView.selectedTags = [NSMutableArray arrayWithArray:@[@"some", @"predefined", @"tags"]];
 	_tagsInputView.enableTagsLookup = YES;
+    _tagsInputView.delegate = self;
 	return _tagsInputView;
 }
 -(void)btnPressed:(id)sender
@@ -66,4 +67,17 @@
 	label.font = AVENIR_NEXT(14);
 	return label;
 }
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AKTagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tagsViewCell" forIndexPath:indexPath];
+    cell.tagName = _tagsInputView.selectedTags[indexPath.row];
+    cell.delegate = _tagsInputView;
+    cell.showDeleteButton = _tagsInputView.allowDeleteTags;
+    [_tagsInputView configureCell:cell atIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
+    cell.tagLabel.textColor = [UIColor blueColor];
+    return cell;
+}
+
 @end
