@@ -13,6 +13,7 @@
 @class AKTagsListView;
 @protocol AKTagsListViewDelegate <NSObject>
 -(void)tagsListView:(AKTagsListView*)tagsView didSelectTag:(NSString*)tag atIndexPath:(NSIndexPath*)indexPath;
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @interface AKTagsListView : UIView
